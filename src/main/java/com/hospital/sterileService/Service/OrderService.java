@@ -29,4 +29,32 @@ public class OrderService implements OrderServiceInterface {
         orderRepository.deleteById(id);
         return "Order has been deleted";
     }
+
+    @Override
+    public String acceptOrder(Integer id) {
+        if(orderRepository.findById(id).isPresent()) {
+            Order order = orderRepository.findById(id).get();
+            order.setAccepted(true);
+            orderRepository.save(order);
+
+            return "Order has been accepted";
+
+        }  else {
+            return "Order doesn't exist";
+        }
+    }
+
+    @Override
+    public Boolean checkOrderStatus(Integer id) {
+        if(orderRepository.findById(id).isPresent()) {
+            Order order = orderRepository.findById(id).get();
+            return order.getAccepted();
+
+        }  else {
+            return false;
+        }
+    }
+
+
 }
+

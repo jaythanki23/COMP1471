@@ -32,4 +32,14 @@ public class OrderController {
         return new ResponseEntity<String>(orderService.deleteOrder(id), HttpStatus.OK);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<String> acceptOrder(@PathVariable("id") Integer id) {
+        return new ResponseEntity<String>(orderService.acceptOrder(id), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/status/{id}")
+    public ResponseEntity<Boolean> checkOrderStatus(@PathVariable("id") Integer id) {
+        return new ResponseEntity<Boolean>(orderService.checkOrderStatus(id), HttpStatus.OK);
+    }
+
 }

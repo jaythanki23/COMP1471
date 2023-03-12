@@ -15,6 +15,9 @@ public class Order {
 
     private Integer customerId;
 
+    @Column(columnDefinition = "boolean default false")
+    private Boolean accepted = false;
+
     @CreationTimestamp
     private Date creationDate;
 
@@ -40,6 +43,14 @@ public class Order {
 
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public Boolean getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(Boolean accepted) {
+        this.accepted = accepted;
     }
 
     public Date getCreationDate() {

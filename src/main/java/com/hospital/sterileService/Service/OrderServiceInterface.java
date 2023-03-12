@@ -10,4 +10,8 @@ public interface OrderServiceInterface {
     Order createOrder(Order order);
 
     String deleteOrder(Integer id);
+
+    String acceptOrder(Integer id);
+
+    Boolean checkOrderStatus(Integer id);
 }
