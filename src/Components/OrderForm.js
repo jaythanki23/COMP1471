@@ -1,8 +1,8 @@
 import React,{useEffect, useState} from 'react';
 import axios from 'axios';
 import './OrderForm.css';
-import SearchBar from "./SearchBar";
-import data from './data';
+import Base_url from "../Url/url";
+import AddDynamicInput from './AddDynamicInput';
 
 
 export default function OrderForm() {
@@ -11,26 +11,24 @@ export default function OrderForm() {
         {tray: '', }
     ])
 
-    const[form,setForm]= useState({});
+    const[order_table,setOrder]= useState({});
     const handleForm=(e)=>{
-        console.log(form);
-        postDatatoServer(form);
+        console.log(order_table);
+        postDatatoServer(order_table);
         e.preventDefault();
     }
 
-    const postDatatoServer=(form)=>{
-        axios.post(`/hospital-staff`, form).then(
+        const postDatatoServer=(order_table)=>{
+        axios.post(`${Base_url}api/order`,order_table).then(
             (response)=>{
                 console.log(response);
                 console.log("success");
-
             },(error)=>{
                 console.log(error);
                 console.log("error");
 
             }
         )
-
     }
     return (
 
@@ -41,37 +39,16 @@ export default function OrderForm() {
                     <input
                         type='Id'
                         className='FormInput'
-                        name='id'
-                        placeholder='Hospital/clinic name'
+                        name='customerId'
+                        placeholder='Customer ID'
                         required
                         onChange={(e) => {
-                            setForm({...form, id: e.target.value})
-
-                        }}
-
-                    />
-                    <input
-                        type='text'
-                        className='FormInput'
-                        name='name'
-                        placeholder='Your name'
-                        required
-                        onChange={(e) => {
-                            setForm({...form, name: e.target.value})
+                            setOrder({...order_table, customerId: e.target.value})
 
                         }}
                     />
-                    <input
-                        type='text'
-                        className='FormInput'
-                        name='description'
-                        placeholder='Tray type'
-                        required
-                        onChange={(e) => {
-                            setForm({...form, description: e.target.value})
 
-                        }}
-                    />
+                    <AddDynamicInput />
 
                     <button type='submit' className='SubmitButton'>
                         Submit

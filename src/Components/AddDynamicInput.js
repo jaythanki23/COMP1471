@@ -1,4 +1,4 @@
-/*import React, { useState } from "react";
+import React, { useState } from "react";
 import './AddDynamicInput.css';
 
 function AddDynamicInput(){
@@ -34,4 +34,4 @@ function AddDynamicInput(){
         </>
     );
 }
-export default AddDynamicInput;*/
+export default AddDynamicInput;
