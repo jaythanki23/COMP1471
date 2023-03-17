@@ -1,0 +1,16 @@
+[
+  {
+  "tray-id": 1,
+  "tray_name": "Dental tray"
+},
+
+{
+  "tray-id": 2,
+  "tray_name": "Heart surgery tray"
+},
+
+{
+  "tray-id": 3,
+  "tray_name": "Eye surgery tray"
+}
+]
