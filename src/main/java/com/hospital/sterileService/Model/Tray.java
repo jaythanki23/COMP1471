@@ -17,12 +17,20 @@ public class Tray {
     )
     private Order order;
 
+    @ManyToOne
+    @JoinColumn(
+            name="tray_configuration_id",
+            referencedColumnName = "id"
+    )
+    private TrayConfiguration trayConfiguration;
+
     public Tray() {
     }
 
-    public Tray(Integer id, Order order) {
+    public Tray(Integer id, Order order, TrayConfiguration trayConfiguration) {
         this.id = id;
         this.order = order;
+        this.trayConfiguration = trayConfiguration;
     }
 
     public Integer getId() {
@@ -39,5 +47,13 @@ public class Tray {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public TrayConfiguration getTrayConfiguration() {
+        return trayConfiguration;
+    }
+
+    public void setTrayConfiguration(TrayConfiguration trayConfiguration) {
+        this.trayConfiguration = trayConfiguration;
     }
 }
