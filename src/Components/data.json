@@ -1,16 +1,25 @@
 [
   {
-  "tray-id": 1,
-  "tray_name": "Dental tray"
+    "id": 1,
+    "customerId": 12,
+    "accepted": false,
+    "creationDate": "12.09.2023",
+    "tray":
+    [
+    "Tray 1",
+    "Tray 2",
+    "Tray 3"
+  ]
 },
-
-{
-  "tray-id": 2,
-  "tray_name": "Heart surgery tray"
-},
-
-{
-  "tray-id": 3,
-  "tray_name": "Eye surgery tray"
-}
-]
+  {
+    "id": 2,
+    "customerId": 13,
+    "accepted": false,
+    "creationDate": "12.09.2023"
+  },
+  {
+    "id": 2,
+    "customerId": 14,
+    "accepted": false,
+    "creationDate": "12.09.2023"
+  }]
