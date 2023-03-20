@@ -19,14 +19,13 @@ export default function OrderForm() {
     }
 
         const postDatatoServer=(order_table)=>{
-        axios.post(`${Base_url}api/order`,order_table).then(
+        axios.post(`${Base_url}/order`,order_table).then(
             (response)=>{
                 console.log(response);
                 console.log("success");
             },(error)=>{
                 console.log(error);
                 console.log("error");
-
             }
         )
     }
@@ -44,11 +43,13 @@ export default function OrderForm() {
                         required
                         onChange={(e) => {
                             setOrder({...order_table, customerId: e.target.value})
-
                         }}
                     />
-
-                    <AddDynamicInput />
+                    <AddDynamicInput
+                        onChange={(e) => {
+                            setOrder({...order_table, tray: e.target.value})
+                        }}
+                    />
 
                     <button type='submit' className='SubmitButton'>
                         Submit
