@@ -1,11 +1,16 @@
 import '../../App.css';
 import React, {useEffect, useState} from "react";
-import OrderTable from "../OrderTable";
+import OrderDetails from "../OrderDetails";
+import { OrderApiClient } from '../../api/OrderApiClient';
+import { ERoles } from '../ERoles';
 
 function Manager() {
+
+    const orderId = 1;
+
     return (
         <>
-            <OrderTable />
+            <OrderDetails orderId={orderId} role={ERoles.manager}/>
         </>
     );
 }
