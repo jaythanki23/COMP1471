@@ -5,7 +5,9 @@ import com.hospital.sterileService.Model.Order;
 import java.util.List;
 
 public interface OrderServiceInterface {
-    List<Order> getAllOrders(Integer customerId);
+    List<Order> getOrdersByCustomerId(Integer customerId);
+
+    List<Order> getAllOrders();
 
     Order getOrder(Integer id);
 
