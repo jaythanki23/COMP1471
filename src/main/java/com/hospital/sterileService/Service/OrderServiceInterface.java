@@ -7,6 +7,8 @@ import java.util.List;
 public interface OrderServiceInterface {
     List<Order> getAllOrders(Integer customerId);
 
+    Order getOrder(Integer id);
+
     Order createOrder(Order order);
 
     String deleteOrder(Integer id);

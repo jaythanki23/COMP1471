@@ -20,6 +20,11 @@ public class OrderService implements OrderServiceInterface {
     }
 
     @Override
+    public Order getOrder(Integer id) {
+        return orderRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Order createOrder(Order order) {
         return orderRepository.save(order);
     }

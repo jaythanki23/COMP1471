@@ -18,9 +18,14 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/customer/{id}")
     public ResponseEntity<List<Order>> getAllOrders(@PathVariable("id") Integer customerId) {
         return new ResponseEntity<List<Order>>(orderService.getAllOrders(customerId), HttpStatus.OK);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Order> getOrder(@PathVariable("id") Integer id) {
+        return new ResponseEntity<Order>(orderService.getOrder(id), HttpStatus.OK);
     }
 
     @PostMapping()
