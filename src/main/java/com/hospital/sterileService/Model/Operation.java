@@ -21,10 +21,6 @@ public class Operation {
 
     private Integer patient_id;
 
-    @OneToOne
-    @JoinColumn(name = "tray_id",referencedColumnName = "id")
-    private Tray tray;
-
     private Boolean success_status;
 
     @CreationTimestamp

@@ -24,6 +24,14 @@ public class Tray {
     )
     private TrayConfiguration trayConfiguration;
 
+
+    @ManyToOne
+    @JoinColumn(
+            name="operation_id",
+            referencedColumnName = "id"
+    )
+    private Operation operation;
+
     public Tray() {
     }
 
