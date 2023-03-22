@@ -12,7 +12,7 @@ public class InstrumentCount {
     private Integer id;
 
     @ManyToOne
-    private Tray tray;
+    private TrayConfiguration trayConfiguration;
 
     @ManyToOne
     private InstrumentType instrumentType;
@@ -22,9 +22,9 @@ public class InstrumentCount {
     public InstrumentCount() {
     }
 
-    public InstrumentCount(Integer id, Tray tray, InstrumentType instrumentType, Integer instrumentCount) {
+    public InstrumentCount(Integer id, TrayConfiguration trayConfiguration, InstrumentType instrumentType, Integer instrumentCount) {
         this.id = id;
-        this.tray = tray;
+        this.trayConfiguration = trayConfiguration;
         this.instrumentType = instrumentType;
         this.instrumentCount = instrumentCount;
     }
@@ -37,12 +37,12 @@ public class InstrumentCount {
         this.id = id;
     }
 
-    public Tray getTray() {
-        return tray;
+    public TrayConfiguration getTrayConfiguration() {
+        return trayConfiguration;
     }
 
-    public void setTray(Tray tray) {
-        this.tray = tray;
+    public void setTrayConfiguration(TrayConfiguration trayConfiguration) {
+        this.trayConfiguration = trayConfiguration;
     }
 
     public InstrumentType getInstrumentType() {
