@@ -1,24 +1,43 @@
 package com.hospital.sterileService.Controller;
 
+import com.hospital.sterileService.Model.InstrumentCount;
 import com.hospital.sterileService.Model.TrayConfiguration;
 
+import com.hospital.sterileService.Service.InstrumentCountServiceInterface;
 import com.hospital.sterileService.Service.TrayConfigurationServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/configuration")
 public class TrayConfigurationController {
     private TrayConfigurationServiceInterface trayConfigurationService;
+    private InstrumentCountServiceInterface instrumentCountService;
 
-    public TrayConfigurationController(TrayConfigurationServiceInterface trayConfigurationService) {
+    public TrayConfigurationController(TrayConfigurationServiceInterface trayConfigurationService, InstrumentCountServiceInterface instrumentCountService) {
         this.trayConfigurationService = trayConfigurationService;
+        this.instrumentCountService = instrumentCountService;
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<TrayConfiguration> getTrayConfiguration(@PathVariable("id") Integer id) {
-        return new ResponseEntity<TrayConfiguration>(trayConfigurationService.getTrayConfiguration(id), HttpStatus.OK);
+    public ResponseEntity<Object> getTrayConfiguration(@PathVariable("id") Integer id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        TrayConfiguration trayConfiguration = trayConfigurationService.getTrayConfiguration(id);
+
+        map.put("id", trayConfiguration.getId());
+        map.put("trayName", trayConfiguration.getTrayName());
+
+        List<InstrumentCount> instruments = instrumentCountService.getAllInstruments(trayConfiguration.getId());
+
+        map.put("instruments", instruments);
+
+        return new ResponseEntity<Object>(map, HttpStatus.OK);
     }
 
     @PostMapping()

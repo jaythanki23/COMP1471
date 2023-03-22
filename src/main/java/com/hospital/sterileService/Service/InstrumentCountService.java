@@ -1,8 +1,11 @@
 package com.hospital.sterileService.Service;
 
 import com.hospital.sterileService.Model.InstrumentCount;
+import com.hospital.sterileService.Model.TrayConfiguration;
 import com.hospital.sterileService.Repository.InstrumentCountRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class InstrumentCountService implements InstrumentCountServiceInterface {
@@ -10,6 +13,11 @@ public class InstrumentCountService implements InstrumentCountServiceInterface {
 
     public InstrumentCountService(InstrumentCountRepository instrumentCountRepository) {
         this.instrumentCountRepository = instrumentCountRepository;
+    }
+
+    @Override
+    public List<InstrumentCount> getAllInstruments(Integer trayConfigId) {
+        return instrumentCountRepository.findByTrayConfigurationId(trayConfigId);
     }
 
     @Override

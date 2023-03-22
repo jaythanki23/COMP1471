@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/instrument_count")
 public class InstrumentCountController {
@@ -13,6 +15,11 @@ public class InstrumentCountController {
 
     public InstrumentCountController(InstrumentCountServiceInterface instrumentCountService) {
         this.instrumentCountService = instrumentCountService;
+    }
+
+    @GetMapping("/tray_config/{trayConfigId}")
+    public ResponseEntity<List<InstrumentCount>> getAllInstruments(@PathVariable("trayConfigId") Integer trayConfigId) {
+        return new ResponseEntity<List<InstrumentCount>>(instrumentCountService.getAllInstruments(trayConfigId), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
