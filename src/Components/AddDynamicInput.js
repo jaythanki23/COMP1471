@@ -1,40 +1,25 @@
 import React, { useState } from "react";
 import './AddDynamicInput.css';
-import axios from "axios";
 
 function AddDynamicInput(){
-    const [inputFields, setInputFields] = useState([
-        {tray: '', }
-    ])
-
-    const[order_table,setOrder]= useState({});
-    const handleForm=(e)=>{
-        console.log(order_table);
-        postDatatoServer(order_table);
-        e.preventDefault();
-    }
-
-    const postDatatoServer=(order_table)=>{
-        axios.post(`"http://localhost:8080/api/order`,order_table).then(
-            (response)=>{
-                console.log(response);
-                console.log("success");
-            },(error)=>{
-                console.log(error);
-                console.log("error");
-            }
-        )
-    }
     const [val,setVal]=useState([]);
     const handleAdd=()=>{
         const abc=[...val,[]]
         setVal(abc)
     }
+
+    const [tray_table, setTray] = useState({
+        tray_name: ""
+    })
+
     const handleChange=(onChangeValue,i)=>{
         const inputdata=[...val]
         inputdata[i]=onChangeValue.target.value;
         setVal(inputdata)
     }
+    const onInputChange = (e) => {
+        setTray({...tray_table, [e.target.tray_name]: e.target.value });
+    };
     const handleDelete=(i)=>{
         const deletVal=[...val]
         deletVal.splice(i,1)
@@ -49,7 +34,10 @@ function AddDynamicInput(){
                     <div>
                         <input className="Input"
                                placeholder='Tray type'
-                               value={data} onChange={e=>handleChange(e,i)} />
+                               value={data}
+                               onChange={(e) => {
+                                   setTray({...tray_table, trayName: e.target.value})
+                               }} />
                         <button className="Button" onClick={()=>handleDelete(i)}>x</button>
                     </div>
                 )

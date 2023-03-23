@@ -7,7 +7,7 @@ import HospitalStaff from './Components/Pages/HospitalStaff';
 import SterilizationStaff from './Components/Pages/SterilizationStaff';
 import Manager from './Components/Pages/Manager';
 import NavBar from "./Components/NavBar";
-import EditOrder from "./Components/EditOrder";
+import Tracking from "./Components/Pages/Tracking";
 import ViewOrder from "./Components/ViewOrder";
 
 function App() {
@@ -20,9 +20,8 @@ function App() {
               <Route path='/hospital-staff' exact element={<HospitalStaff />} />
               <Route path='/sterilization-staff' exact element={<SterilizationStaff />} />
               <Route path='/manager' exact element={<Manager />} />
-              <Route exact path="/edit-order/:id" element={<EditOrder />} />
-              <Route path="/view-order/:id" element={<ViewOrder />} />
-
+              <Route path='/tracking' exact element={<Tracking />} />
+              <Route path='/view-order/:id' exact element={<ViewOrder/>} />
           </Routes>
       </Router>
   );
