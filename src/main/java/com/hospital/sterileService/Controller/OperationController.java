@@ -19,8 +19,8 @@ public class OperationController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Optional> getOperation(@PathVariable("id") Integer id) {
-        return new ResponseEntity<Optional>(operationService.getOperation(id), HttpStatus.OK);
+    public ResponseEntity<Operation> getOperation(@PathVariable("id") Integer id) {
+        return new ResponseEntity<Operation>(operationService.getOperation(id), HttpStatus.OK);
     }
 
     @PostMapping

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface OperationServiceInterface {
 
-    Optional<Operation> getOperation(Integer operationId);
+    Operation getOperation(Integer operationId);
 
     Operation setOperation(Operation operation);
 

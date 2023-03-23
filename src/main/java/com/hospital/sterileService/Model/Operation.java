@@ -1,15 +1,11 @@
 package com.hospital.sterileService.Model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "operation_table")
 public class Operation {
 
@@ -17,13 +13,63 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer staff_id;
+    private Integer staffId;
 
-    private Integer patient_id;
+    private Integer patientId;
 
-    private Boolean success_status;
+    private Boolean successStatus;
 
     @CreationTimestamp
     private Date creationDate;
 
+    public Operation() {
+    }
+
+    public Operation(Integer id, Integer staffId, Integer patientId, Boolean successStatus, Date creationDate) {
+        this.id = id;
+        this.staffId = staffId;
+        this.patientId = patientId;
+        this.successStatus = successStatus;
+        this.creationDate = creationDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(Integer staffId) {
+        this.staffId = staffId;
+    }
+
+    public Integer getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
+    }
+
+    public Boolean getSuccessStatus() {
+        return successStatus;
+    }
+
+    public void setSuccessStatus(Boolean successStatus) {
+        this.successStatus = successStatus;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 }

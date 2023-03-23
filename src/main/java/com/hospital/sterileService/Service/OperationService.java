@@ -16,8 +16,8 @@ public class OperationService implements OperationServiceInterface{
     }
 
     @Override
-    public Optional<Operation> getOperation(Integer trayId) {
-        return Optional.ofNullable(this.operationRepository.findByTrayId(trayId));
+    public Operation getOperation(Integer id) {
+        return operationRepository.findById(id).orElse(null);
     }
 
     @Override
