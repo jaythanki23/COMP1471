@@ -49,7 +49,7 @@ export default function OrderDetails({orderId,role}) {
             Created: {order.creationDate}
             <br/>
             {trays.map((tray,index) => (
-            <TrayDetails key={index} tray={tray}></TrayDetails>
+            <TrayDetails key={index} tray={tray} role={role}></TrayDetails>
            ))}
         </div>
         

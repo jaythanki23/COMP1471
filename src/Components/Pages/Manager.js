@@ -10,7 +10,7 @@ function Manager() {
 
     return (
         <>
-            <OrderDetails orderId={orderId} role={ERoles.manager}/>
+            <OrderDetails orderId={orderId} role={ERoles.Manager}/>
         </>
     );
 }
