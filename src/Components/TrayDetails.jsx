@@ -35,9 +35,17 @@ export default function TrayDetails({tray,role}) {
     return (
         <div>
             <h2>Tray</h2>
-            ID: {tray.id} <br/>
-            Type: {tray.trayConfiguration.trayName}<br/>
-            <strong>Contents</strong><br/>
+            Tray ID: {tray.id} <br/>
+            Tray type: {tray.trayConfiguration.trayName}
+            <br/>
+            <strong>Used in operation:</strong><br/>
+            Operation ID: {tray.operation.id}<br/>
+            Date: {tray.operation.creationDate}<br/>
+            Operation staff ID: {tray.operation.staffId}<br/>
+            Patient ID: {tray.operation.patientId}<br/>
+            Success status: {tray.operation.successStatus.toString()}
+            <br/>
+            <strong>Tray Contents:</strong><br/>
             {instC.map((ic,index) => (
                 <InstrumentDetails key={index} inst={ic.instrumentType} count={ic.instrumentCount} process={findProcessForInst(ic.instrumentType)} role={role}/>
            ))}
