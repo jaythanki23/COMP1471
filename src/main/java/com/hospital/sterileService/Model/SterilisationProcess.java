@@ -9,8 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "sterilisation_process_table")
 public class SterilisationProcess {
 
@@ -27,7 +25,8 @@ public class SterilisationProcess {
 
     private Integer sterilisation_machine_id;
 
-    private Boolean isDone;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDone = false;
 
     @ManyToOne
     @JoinColumn(name = "tray_id",referencedColumnName = "id")
@@ -40,4 +39,81 @@ public class SterilisationProcess {
     @CreationTimestamp
     private Date creationDate;
 
+    public SterilisationProcess() {
+    }
+
+    public SterilisationProcess(Integer id, Date date, Staff staff, Integer sterilisation_machine_id, Boolean isDone, Tray tray, InstrumentType instrumentType, Date creationDate) {
+        this.id = id;
+        this.date = date;
+        this.staff = staff;
+        this.sterilisation_machine_id = sterilisation_machine_id;
+        this.isDone = isDone;
+        this.tray = tray;
+        this.instrumentType = instrumentType;
+        this.creationDate = creationDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
+
+    public Integer getSterilisation_machine_id() {
+        return sterilisation_machine_id;
+    }
+
+    public void setSterilisation_machine_id(Integer sterilisation_machine_id) {
+        this.sterilisation_machine_id = sterilisation_machine_id;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
+    }
+
+    public Tray getTray() {
+        return tray;
+    }
+
+    public void setTray(Tray tray) {
+        this.tray = tray;
+    }
+
+    public InstrumentType getInstrumentType() {
+        return instrumentType;
+    }
+
+    public void setInstrumentType(InstrumentType instrumentType) {
+        this.instrumentType = instrumentType;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 }

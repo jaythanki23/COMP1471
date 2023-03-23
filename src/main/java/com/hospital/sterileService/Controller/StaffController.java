@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/staff/")
+@RequestMapping("/api/staff")
 public class StaffController {
 
     private StaffServiceInterface staffServiceInterface;
