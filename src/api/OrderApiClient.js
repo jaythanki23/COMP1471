@@ -5,8 +5,8 @@ export const OrderApiClient = {
     getOrder(id){
         return axios.get(`${Base_url}/order/${id}`).then(
             (response)=>{
-                console.log(response);
-                console.log("success");
+                // console.log(response);
+                // console.log("success");
                 return response.data
             },(error)=>{
                 console.log(error);

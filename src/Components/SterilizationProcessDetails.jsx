@@ -12,8 +12,8 @@ export default function SterilizationProcessDetails({process, role}) {
     return (
         <div>
             <h4>Sterilisation: {process.instrumentType.step.stepName}</h4>
-            Machine ID: {(process.sterilisation_machine_id===undefined)?"---":process.sterilisation_machine_id}<br/>
-            Status: {process.isDone?"In progress":"Done"}<br/>
+            Machine ID: {(process.sterilisation_machine_id===null)?"---":process.sterilisation_machine_id}<br/>
+            Status: {process.isDone?"Done":"In progress"}<br/>
             Date: {process.date}<br/>
         </div>
     )

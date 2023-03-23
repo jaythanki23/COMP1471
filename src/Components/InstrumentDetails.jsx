@@ -1,24 +1,10 @@
 import React, {useEffect, useState} from "react";
-import { SterilizationProcessApiClient } from '../api/SterilizationProcessApiClient';
 import SterilizationProcessDetails from './SterilizationProcessDetails'
 
-export default function InstrumentDetails({inst, count, role}) {
+export default function InstrumentDetails({inst, count, process, role}) {
 
-    console.log("InstrumentDetails: ", inst)
+    console.log("InstrumentDetails: ", inst, " Process: ", process)
 
-    const [process, setProcess] = useState()
-
-    useEffect(() => {
-        SterilizationProcessApiClient.getSterilizationProcessById(1).then(
-            o=>filterProcess(o));
-      }, []);
-
-    function filterProcess(p){
-        if(p.instrumentType.id === inst.id)
-        {
-            setProcess(p)
-        }
-    }
     if(inst == null)
         return null
 
