@@ -1,61 +1,52 @@
-import React,{useEffect, useState} from 'react';
-import axios from 'axios';
-import './OrderForm.css';
-import Base_url from "../Url/url";
-import AddDynamicInput from './AddDynamicInput';
-
+import axios from "axios";
+import React, { useState } from "react";
+import AddDynamicInput from "./AddDynamicInput";
 
 export default function OrderForm() {
 
-    const [inputFields, setInputFields] = useState([
-        {tray: '', }
-    ])
+    const [order_table, setOrder] = useState({
+        customer_id: ""
+    });
 
-    const[order_table,setOrder]= useState({});
-    const handleForm=(e)=>{
-        console.log(order_table);
-        postDatatoServer(order_table);
+    const [tray_table, setTray] = useState({
+        tray_configuration_id: ""
+    })
+
+    const { customer_id } = order_table;
+
+    const onInputChange = (e) => {
+        setOrder({ ...order_table, [e.target.customer_id]: e.target.value });
+    };
+
+    const onSubmit = async (e) => {
         e.preventDefault();
-    }
+        await axios.post("http://localhost:8080/api/order", order_table);
+    };
 
-        const postDatatoServer=(order_table)=>{
-        axios.post(`${Base_url}/order`,order_table).then(
-            (response)=>{
-                console.log(response);
-                console.log("success");
-            },(error)=>{
-                console.log(error);
-                console.log("error");
-            }
-        )
-    }
+
     return (
-
         <div className='container'>
-
             <h1 className='Title' color= "s">Order your trays right now</h1>
-                <form onSubmit={handleForm}>
-                    <input
-                        type='Id'
-                        className='FormInput'
-                        name='customerId'
-                        placeholder='Customer ID'
-                        required
-                        onChange={(e) => {
-                            setOrder({...order_table, customerId: e.target.value})
-                        }}
-                    />
-                    <AddDynamicInput
-                        onChange={(e) => {
-                            setOrder({...order_table, tray: e.target.value})
-                        }}
-                    />
-
-                    <button type='submit' className='SubmitButton'>
-                        Submit
-                    </button>
-                </form>
+            <form onSubmit={(e) => onSubmit(e)}>
+                <input
+                    type='Id'
+                    className='FormInput'
+                    name='customerId'
+                    placeholder='Customer ID'
+                    required
+                    onChange={(e) => {
+                        setOrder({...order_table, customerId: e.target.value})
+                    }}
+                />
+                <AddDynamicInput
+                    onChange={(e) => {
+                        setOrder({...tray_table, trayConfigurationId: e.target.value})
+                    }}
+                />
+                <button type='submit' className='SubmitButton'>
+                    Submit
+                </button>
+            </form>
         </div>
     );
 }
-
