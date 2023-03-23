@@ -35,10 +35,11 @@ public class Tray {
     public Tray() {
     }
 
-    public Tray(Integer id, Order order, TrayConfiguration trayConfiguration) {
+    public Tray(Integer id, Order order, TrayConfiguration trayConfiguration, Operation operation) {
         this.id = id;
         this.order = order;
         this.trayConfiguration = trayConfiguration;
+        this.operation = operation;
     }
 
     public Integer getId() {
@@ -63,5 +64,13 @@ public class Tray {
 
     public void setTrayConfiguration(TrayConfiguration trayConfiguration) {
         this.trayConfiguration = trayConfiguration;
+    }
+
+    public Operation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Operation operation) {
+        this.operation = operation;
     }
 }
