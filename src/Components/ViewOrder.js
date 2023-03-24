@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect,useState } from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import './ViewOrder.css'
+import TrayType from "./TrayType";
+import {TrayApiClient} from "../api/TrayApiClient";
 
 export default function ViewOrder() {
 
@@ -14,12 +16,8 @@ export default function ViewOrder() {
         customer_id: ""
     });
 
-    const [tray, setTray] = useState( {
-        id: "",
-        tray_id: "",
-        tray_configuration_id: "",
-        operation_id: ""
-    })
+    const [trays, setTrays] = useState([])
+
 
     const { id } = useParams();
 
@@ -27,15 +25,19 @@ export default function ViewOrder() {
         loadOrder();
     }, []);
 
+    useEffect(() => {
+        if(order == null)
+            return;
+
+        TrayApiClient.getAllTraysByOrderId(order.id).then(
+            o=>setTrays((o==undefined)?[]:o));
+    }, [order]);
+
+
     const loadOrder = async () => {
         const result = await axios.get(`http://localhost:8080/api/order/${id}`);
         setOrder(result.data);
     };
-
-    const loadTrays = async () => {
-        const trayResult = await axios.get(`http://localhost:8080/api/order/tray/${id}`)
-        setTray(trayResult.data);
-    }
 
     const deleteOrder = async (id) => {
         await axios.delete(`http://localhost:8080/api/order/${id}`);
@@ -70,7 +72,9 @@ export default function ViewOrder() {
                                     </li>
                                     <li className="list-group-item">
                                         <b>Trays ordered: </b>
-                                            {(tray.tray_configuration_id)}
+                                        {trays.map((tray,index) => (
+                                            <TrayType key={index} tray={tray}></TrayType>
+                                        ))}
                                     </li>
                                     {order.accepted === false ?
                                         <button

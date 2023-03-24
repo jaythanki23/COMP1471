@@ -13,7 +13,7 @@ function Tracking() {
         localStorage.setItem("inputValue",data.current.value)
     }
 
-    console.log(localStorage.getItem("inputValue"),)
+    console.log(localStorage.getItem(1),)
 
     var retrievedObject = localStorage.getItem("inputValue");
 
@@ -21,7 +21,7 @@ function Tracking() {
         <>
             <div className="container">
                 <h1 className="title" color="s">
-                Input your order ID
+                    Input your order ID
                 </h1>
                 <input
                     className="input"
@@ -29,11 +29,12 @@ function Tracking() {
                     placeholder="Your order ID"
                 />
                 <Link to={`/tracking/view-order/${JSON.parse(retrievedObject)}`}>
-                <Button
-                    className="button"
-                    onClick={handleClick}>
-                    Track
-                </Button>
+                    <Button
+                        className="button"
+                        onClick={handleClick}
+                        >
+                        Track
+                    </Button>
                 </Link>
             </div>
         </>
