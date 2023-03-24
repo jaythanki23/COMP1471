@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/step")
@@ -14,6 +16,11 @@ public class SterilisationStepController {
 
     public SterilisationStepController(SterilisationStepServiceInterface sterilisationStepService) {
         this.sterilisationStepService = sterilisationStepService;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<SterilisationStep>> getAllSteps() {
+        return new ResponseEntity<List<SterilisationStep>>(sterilisationStepService.getAllSteps(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
