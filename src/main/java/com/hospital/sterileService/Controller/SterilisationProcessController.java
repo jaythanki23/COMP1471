@@ -2,18 +2,12 @@ package com.hospital.sterileService.Controller;
 
 import com.hospital.sterileService.Model.SterilisationProcess;
 import com.hospital.sterileService.Service.SterilisationProcessServiceInterface;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -52,7 +46,8 @@ public class SterilisationProcessController {
     }
 
     @PutMapping("/date/{id}")
-    public ResponseEntity<String> updateDate(@PathVariable("id") Integer id, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("date") LocalDate date) {
+    public ResponseEntity<String> updateDate(@PathVariable("id") Integer id, @RequestParam("date") String dateString){
+        LocalDate date = LocalDate.parse(dateString.replace(" ","-").substring(1, dateString.length() - 1), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         return new ResponseEntity<String>(sterilisationProcessService.updateDate(id, date), HttpStatus.ACCEPTED);
     }
 }
