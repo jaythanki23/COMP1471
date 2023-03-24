@@ -4,6 +4,7 @@ import com.hospital.sterileService.Model.SterilisationProcess;
 import com.hospital.sterileService.Repository.SterilisationProcessRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class SterilisationProcessService implements SterilisationProcessServiceI
     }
 
     @Override
-    public String updateDate(Integer id, Date date) {
+    public String updateDate(Integer id, LocalDate date) {
         if(sterilisationProcessRepository.findById(id).isPresent()) {
             SterilisationProcess sterilisationProcess = sterilisationProcessRepository.findById(id).get();
             sterilisationProcess.setDate(date);

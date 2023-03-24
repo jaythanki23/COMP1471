@@ -3,6 +3,7 @@ package com.hospital.sterileService.Model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -20,12 +21,12 @@ public class Operation {
     private Boolean successStatus;
 
     @CreationTimestamp
-    private Date creationDate;
+    private LocalDate creationDate;
 
     public Operation() {
     }
 
-    public Operation(Integer id, Integer staffId, Integer patientId, Boolean successStatus, Date creationDate) {
+    public Operation(Integer id, Integer staffId, Integer patientId, Boolean successStatus, LocalDate creationDate) {
         this.id = id;
         this.staffId = staffId;
         this.patientId = patientId;
@@ -65,11 +66,11 @@ public class Operation {
         this.successStatus = successStatus;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 }

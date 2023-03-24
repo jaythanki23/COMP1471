@@ -2,6 +2,7 @@ package com.hospital.sterileService.Service;
 
 import com.hospital.sterileService.Model.SterilisationProcess;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface SterilisationProcessServiceInterface {
 
     String updateStatus(Integer id);
 
-    String updateDate(Integer id, Date date);
+    String updateDate(Integer id, LocalDate date);
 }

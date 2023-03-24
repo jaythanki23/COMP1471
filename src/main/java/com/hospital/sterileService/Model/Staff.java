@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "staff_table")
 public class Staff {
 
@@ -16,4 +14,28 @@ public class Staff {
     private Integer id;
 
     private String name;
+
+    public Staff() {
+    }
+
+    public Staff(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -17,7 +18,7 @@ public class SterilisationProcess {
     private Integer id;
 
     @Timestamp
-    private Date date;
+    private LocalDate date;
 
     private Integer sterilisation_machine_id;
 
@@ -33,12 +34,12 @@ public class SterilisationProcess {
     private InstrumentType instrumentType;
 
     @CreationTimestamp
-    private Date creationDate;
+    private LocalDate creationDate;
 
     public SterilisationProcess() {
     }
 
-    public SterilisationProcess(Integer id, Date date, Integer sterilisation_machine_id, Boolean isDone, Tray tray, InstrumentType instrumentType, Date creationDate) {
+    public SterilisationProcess(Integer id, LocalDate date, Integer sterilisation_machine_id, Boolean isDone, Tray tray, InstrumentType instrumentType, LocalDate creationDate) {
         this.id = id;
         this.date = date;
         this.sterilisation_machine_id = sterilisation_machine_id;
@@ -46,6 +47,14 @@ public class SterilisationProcess {
         this.tray = tray;
         this.instrumentType = instrumentType;
         this.creationDate = creationDate;
+    }
+
+    public SterilisationProcess(LocalDate date, Integer sterilisation_machine_id, Boolean isDone, Tray tray, InstrumentType instrumentType) {
+        this.date = date;
+        this.sterilisation_machine_id = sterilisation_machine_id;
+        this.isDone = isDone;
+        this.tray = tray;
+        this.instrumentType = instrumentType;
     }
 
     public Integer getId() {
@@ -56,11 +65,11 @@ public class SterilisationProcess {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -96,11 +105,11 @@ public class SterilisationProcess {
         this.instrumentType = instrumentType;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 }

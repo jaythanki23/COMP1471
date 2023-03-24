@@ -3,6 +3,7 @@ package com.hospital.sterileService.Model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,16 +20,16 @@ public class Order {
     private Boolean accepted = false;
 
     @ManyToOne
-    @JoinColumn(name = "staff_id",referencedColumnName = "id")
+    @JoinColumn(name = "staff_id", referencedColumnName = "id")
     private Staff staff;
 
     @CreationTimestamp
-    private Date creationDate;
+    private LocalDate creationDate;
 
     public Order() {
     }
 
-    public Order(Integer id, Integer customerId, Boolean accepted, Staff staff, Date creationDate) {
+    public Order(Integer id, Integer customerId, Boolean accepted, Staff staff, LocalDate creationDate) {
         this.id = id;
         this.customerId = customerId;
         this.accepted = accepted;
@@ -68,11 +69,11 @@ public class Order {
         this.staff = staff;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 }

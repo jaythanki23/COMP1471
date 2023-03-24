@@ -52,7 +52,7 @@ public class SterilisationProcessController {
     }
 
     @PutMapping("/date/{id}")
-    public ResponseEntity<String> updateDate(@PathVariable("id") Integer id, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("date") Date date) {
+    public ResponseEntity<String> updateDate(@PathVariable("id") Integer id, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("date") LocalDate date) {
         return new ResponseEntity<String>(sterilisationProcessService.updateDate(id, date), HttpStatus.ACCEPTED);
     }
 }

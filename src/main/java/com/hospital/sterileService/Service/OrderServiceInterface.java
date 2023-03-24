@@ -1,6 +1,7 @@
 package com.hospital.sterileService.Service;
 
 import com.hospital.sterileService.Model.Order;
+import com.hospital.sterileService.Model.Staff;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface OrderServiceInterface {
     String acceptOrder(Integer id);
 
     Boolean checkOrderStatus(Integer id);
+
+    String assignStaff(Integer id, Staff staff);
 }

@@ -1,6 +1,7 @@
 package com.hospital.sterileService.Service;
 
 import com.hospital.sterileService.Model.Order;
+import com.hospital.sterileService.Model.Staff;
 import com.hospital.sterileService.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,7 @@ public class OrderService implements OrderServiceInterface {
             return "Order has been accepted";
 
         }  else {
-            return "Order doesn't exist";
+            return "Order not found";
         }
     }
 
@@ -63,6 +64,20 @@ public class OrderService implements OrderServiceInterface {
 
         }  else {
             return false;
+        }
+    }
+
+    @Override
+    public String assignStaff(Integer id, Staff staff) {
+        if(orderRepository.findById(id).isPresent()) {
+            Order order = orderRepository.findById(id).get();
+            System.out.println(staff.getName());
+            order.setStaff(staff);
+            orderRepository.save(order);
+            System.out.println(order.getStaff().getName());
+            return "Staff has been assigned";
+        } else {
+            return "Order not found";
         }
     }
 

@@ -3,6 +3,7 @@ package com.hospital.sterileService.Controller;
 import java.util.List;
 
 import com.hospital.sterileService.Model.Order;
+import com.hospital.sterileService.Model.Staff;
 import com.hospital.sterileService.Service.OrderServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +52,11 @@ public class OrderController {
     @GetMapping("/status/{id}")
     public ResponseEntity<Boolean> checkOrderStatus(@PathVariable("id") Integer id) {
         return new ResponseEntity<Boolean>(orderService.checkOrderStatus(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/assign_staff/{id}")
+    public ResponseEntity<String> assignStaff(@PathVariable("id") Integer id, @RequestBody Staff staff) {
+        return new ResponseEntity<String>(orderService.assignStaff(id, staff), HttpStatus.ACCEPTED);
     }
 
 }
