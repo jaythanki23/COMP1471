@@ -21,7 +21,7 @@ function App() {
               <Route path='/sterilization-staff' exact element={<SterilizationStaff />} />
               <Route path='/manager' exact element={<Manager />} />
               <Route path='/tracking' exact element={<Tracking />} />
-              <Route path='/view-order/:id' exact element={<ViewOrder/>} />
+              <Route path='/tracking/view-order/:id' exact element={<ViewOrder/>} />
           </Routes>
       </Router>
   );
