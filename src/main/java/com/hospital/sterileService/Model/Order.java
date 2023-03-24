@@ -18,15 +18,22 @@ public class Order {
     @Column(columnDefinition = "boolean default false")
     private Boolean accepted = false;
 
+    @ManyToOne
+    @JoinColumn(name = "staff_id",referencedColumnName = "id")
+    private Staff staff;
+
     @CreationTimestamp
     private Date creationDate;
 
     public Order() {
     }
 
-    public Order(Integer id, Integer customerId) {
+    public Order(Integer id, Integer customerId, Boolean accepted, Staff staff, Date creationDate) {
         this.id = id;
         this.customerId = customerId;
+        this.accepted = accepted;
+        this.staff = staff;
+        this.creationDate = creationDate;
     }
 
     public Integer getId() {
@@ -51,6 +58,14 @@ public class Order {
 
     public void setAccepted(Boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 
     public Date getCreationDate() {

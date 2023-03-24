@@ -19,10 +19,6 @@ public class SterilisationProcess {
     @Timestamp
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "staff_id",referencedColumnName = "id")
-    private Staff staff;
-
     private Integer sterilisation_machine_id;
 
     @Column(columnDefinition = "boolean default false")
@@ -42,10 +38,9 @@ public class SterilisationProcess {
     public SterilisationProcess() {
     }
 
-    public SterilisationProcess(Integer id, Date date, Staff staff, Integer sterilisation_machine_id, Boolean isDone, Tray tray, InstrumentType instrumentType, Date creationDate) {
+    public SterilisationProcess(Integer id, Date date, Integer sterilisation_machine_id, Boolean isDone, Tray tray, InstrumentType instrumentType, Date creationDate) {
         this.id = id;
         this.date = date;
-        this.staff = staff;
         this.sterilisation_machine_id = sterilisation_machine_id;
         this.isDone = isDone;
         this.tray = tray;
@@ -67,14 +62,6 @@ public class SterilisationProcess {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Staff getStaff() {
-        return staff;
-    }
-
-    public void setStaff(Staff staff) {
-        this.staff = staff;
     }
 
     public Integer getSterilisation_machine_id() {
