@@ -13,7 +13,7 @@ export default function ManageChoice() {
                     e.preventDefault();
                     window.location.href='http://localhost:3000/manager/manage/trays';
                 }}
-            > Manage trays</button>
+            > Manage tray configurations</button>
             <button
                 type="button"
                 className="button"
