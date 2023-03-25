@@ -11,6 +11,14 @@ function Manager() {
     return (
         <>
             <OrderDetails orderId={orderId} role={ERoles.manager}/>
+            <button
+                type="button"
+                className="button"
+                onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href='http://localhost:3000/manager/manage';
+                }}
+            > Manage trays and sterilization processes</button>
         </>
     );
 }
