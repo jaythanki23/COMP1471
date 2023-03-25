@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { InstrumentApiClient } from '../api/InstrumentApiClient';
 
-export default function TrayDetails({tray,role}) {
+export default function TrayType({tray,role}) {
 
     console.log("TrayDetails: ", tray)
 
