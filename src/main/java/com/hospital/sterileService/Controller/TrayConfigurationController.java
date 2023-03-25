@@ -41,6 +41,11 @@ public class TrayConfigurationController {
         return new ResponseEntity<Object>(map, HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<TrayConfiguration>> getAllTrayConfigurations(){
+        return new ResponseEntity<List<TrayConfiguration>>(trayConfigurationService.getAllTrayConfiguration(), HttpStatus.OK);
+    }
+
     @PostMapping()
     public ResponseEntity<TrayConfiguration> createTrayConfiguration(@RequestBody TrayConfiguration trayConfiguration) {
         return new ResponseEntity<TrayConfiguration>(trayConfigurationService.createTrayConfiguration(trayConfiguration), HttpStatus.CREATED);

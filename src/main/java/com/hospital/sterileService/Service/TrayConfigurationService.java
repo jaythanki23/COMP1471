@@ -4,6 +4,8 @@ import com.hospital.sterileService.Model.TrayConfiguration;
 import com.hospital.sterileService.Repository.TrayConfigurationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TrayConfigurationService implements TrayConfigurationServiceInterface {
 
@@ -28,4 +30,10 @@ public class TrayConfigurationService implements TrayConfigurationServiceInterfa
         trayConfigurationRepository.deleteById(id);
         return "This configuration has been deleted";
     }
+
+    @Override
+    public List<TrayConfiguration> getAllTrayConfiguration() {
+        return trayConfigurationRepository.findAll();
+    }
+
 }
