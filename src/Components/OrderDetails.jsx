@@ -53,12 +53,14 @@ export default function OrderDetails(role) {
                                 >
                                     Edit
                                 </Link>
-                                <button
-                                    className="btn btn-danger mx-2"
-                                    onClick={() => deleteOrder(order.id)}
-                                >
-                                    Delete
-                                </button>
+                                {order.accepted === false ?
+                                    <button
+                                        className="btn btn-primary mx-2"
+                                        onClick={() => deleteOrder(order.id)}
+                                    >
+                                        Cancel
+                                    </button>
+                                    : null}
                             </td>
                         </tr>
                     ))}

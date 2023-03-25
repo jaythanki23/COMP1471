@@ -78,7 +78,6 @@ export default function EditOrder({orderId, role}) {
                                         <TrayDetails key={index} tray={tray}></TrayDetails>
                                     ))}
                                 </li>
-
                             </ul>
                         </div>
                     </div>
