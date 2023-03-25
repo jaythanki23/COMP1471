@@ -40,6 +40,12 @@ export default function EditOrder({orderId, role}) {
         navigate("/");
     };
 
+    function handleOrderAccept() {
+        OrderApiClient.acceptOrder(order.id).then(
+            ()=>OrderApiClient.getOrder(order.id).then(
+                o=>setOrder(o)));
+    }
+
     return (
         <div className="container">
             <div className="row">
@@ -62,6 +68,9 @@ export default function EditOrder({orderId, role}) {
                                     {order.accepted === false ?
                                         "Order not yet accepted"
                                         : "Order has been accepted"}
+                                    {order.accepted === false ?
+                                        <Button onClick={()=>handleOrderAccept()}>Accept</Button>
+                                        : null}
                                 </li>
                                 <li className="list-group-item">
                                     <b>Trays ordered: </b>
