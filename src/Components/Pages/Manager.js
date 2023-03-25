@@ -6,11 +6,18 @@ import { ERoles } from '../ERoles';
 
 function Manager() {
 
-    const orderId = 1;
+    const [orders, setOrders] = useState([])
+
+    useEffect(() => {
+        OrderApiClient.getAllOrders().then(
+            o=>setOrders(o));
+      }, []);
 
     return (
         <>
-            <OrderDetails orderId={orderId} role={ERoles.Manager}/>
+            {orders.map((o,index) => (
+                <OrderDetails key={index} orderId={o.id} role={ERoles.manager}/>
+            ))}
         </>
     );
 }

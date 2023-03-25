@@ -14,12 +14,36 @@ export const OrderApiClient = {
             }
         )
     },
-    getOrderByCustomerId(id){
+    getAllOrders(){
+        return axios.get(`${Base_url}/order`).then(
+            (response)=>{
+                // console.log("ALL ORDERS: ", response);
+                // console.log("success");
+                return response.data
+            },(error)=>{
+                console.log(error);
+                console.log("error");
+            }
+        )
+    },
+    getOrdersByCustomerId(id){
         return axios.get(`${Base_url}/order/customer/${id}`).then(
             (response)=>{
                 // console.log(response);
                 // console.log("success");
-                return response.data[0]
+                return response.data
+            },(error)=>{
+                console.log(error);
+                console.log("error");
+            }
+        )
+    },
+    getOrdersByStaffId(id){
+        return axios.get(`${Base_url}/order/customer/${id}`).then(
+            (response)=>{
+                // console.log(response);
+                // console.log("success");
+                return response.data
             },(error)=>{
                 console.log(error);
                 console.log("error");
