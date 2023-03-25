@@ -1,57 +1,70 @@
-import React, {useEffect, useState} from "react";
-import { Button } from "react-bootstrap";
-import { OrderApiClient } from "../api/OrderApiClient";
-import {TrayApiClient} from '../api/TrayApiClient'
-import TrayDetails from './TrayDetails';
-import { ERoles } from "./ERoles";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
+import {Button} from "react-bootstrap";
+import {ERoles} from "./ERoles";
 
-export default function OrderDetails({orderId,role}) {
+export default function OrderDetails(role) {
+    const [orders, setOrders] = useState([]);
 
-    console.log("OrderDetails: ", orderId)
-
-    const [trays, setTrays] = useState([])
-    const [order, setOrder] = useState()
+    const { id } = useParams();
 
     useEffect(() => {
-        OrderApiClient.getOrder(orderId).then(
-            o=>setOrder(o));
-      }, [orderId]);
+        loadOrders();
+    }, []);
 
-    useEffect(() => {
-        if(order == null)
-            return;
+    const loadOrders = async () => {
+        const result = await axios.get("http://localhost:8080/api/order");
+        setOrders(result.data);
+    };
 
-        TrayApiClient.getAllTraysByOrderId(order.id).then(
-            o=>setTrays((o==undefined)?[]:o));
-      }, [order]);
+    const deleteOrder = async (id) => {
+        await axios.delete(`http://localhost:8080/api/order/${id}`);
+        loadOrders();
+    };
 
-    if(order == null)
-        return null
-
-    function handleOrderAccept() {
-        OrderApiClient.acceptOrder(order.id).then(
-            ()=>OrderApiClient.getOrder(orderId).then(
-                        o=>setOrder(o)));
-    }
 
     return (
-        <div>
-            <h1>Order</h1>
-            ID: {order.id}
-            <br/>
-            Customer ID: {order.customerId}
-            <br/>
-            Accepted: {order.accepted.toString()}
-            {(role===ERoles.manager&&!order.accepted)&&(<Button onClick={()=>handleOrderAccept()}>Accept</Button>)}
-            <br/>
-            Assigned staff member: TODO!!!!!!
-            <br/>
-            Created: {order.creationDate}
-            <br/>
-            {trays.map((tray,index) => (
-            <TrayDetails key={index} tray={tray} role={role}></TrayDetails>
-           ))}
+        <div className="container">
+            <div className="py-4">
+                <table className="table border shadow">
+                    <thead>
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Customer ID</th>
+                        <th scope="col">Accepted</th>
+                        <th scope="col">Creation Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {orders.map((order, index) => (
+                        <tr>
+                            <td>{order.id}</td>
+                            <td>{order.customerId}</td>
+                            <td>
+                                {order.accepted.toString()}
+                            </td>
+                            <td>{order.creationDate}</td>
+                            <td>
+                                <Link
+                                    className="btn btn-primary mx-2"
+                                    to={`/manager/edit-order/${order.id}`}
+                                >
+                                    Edit
+                                </Link>
+                                <button
+                                    className="btn btn-danger mx-2"
+                                    onClick={() => deleteOrder(order.id)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        
-    )
+    );
 }

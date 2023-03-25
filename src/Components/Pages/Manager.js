@@ -1,23 +1,16 @@
 import '../../App.css';
-import React, {useEffect, useState} from "react";
-import OrderDetails from "../OrderDetails";
 import { OrderApiClient } from '../../api/OrderApiClient';
+import React from "react";
+import OrderDetails from "../OrderDetails";
 import { ERoles } from '../ERoles';
 
 function Manager() {
 
-    const [orders, setOrders] = useState([])
-
-    useEffect(() => {
-        OrderApiClient.getAllOrders().then(
-            o=>setOrders(o));
-      }, []);
+    const orderId = 1;
 
     return (
         <>
-            {orders.map((o,index) => (
-                <OrderDetails key={index} orderId={o.id} role={ERoles.manager}/>
-            ))}
+            <OrderDetails orderId={orderId} role={ERoles.manager}/>
         </>
     );
 }

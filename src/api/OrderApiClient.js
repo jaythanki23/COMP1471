@@ -5,8 +5,8 @@ export const OrderApiClient = {
     getOrder(id){
         return axios.get(`${Base_url}/order/${id}`).then(
             (response)=>{
-                // console.log(response);
-                // console.log("success");
+                console.log(response);
+                console.log("success");
                 return response.data
             },(error)=>{
                 console.log(error);
@@ -14,11 +14,11 @@ export const OrderApiClient = {
             }
         )
     },
-    getAllOrders(){
+    getAllOrders(id){
         return axios.get(`${Base_url}/order`).then(
             (response)=>{
-                // console.log("ALL ORDERS: ", response);
-                // console.log("success");
+                console.log(response);
+                console.log("success");
                 return response.data
             },(error)=>{
                 console.log(error);
@@ -26,24 +26,12 @@ export const OrderApiClient = {
             }
         )
     },
-    getOrdersByCustomerId(id){
+    getOrderByCustomerId(id){
         return axios.get(`${Base_url}/order/customer/${id}`).then(
             (response)=>{
-                // console.log(response);
-                // console.log("success");
-                return response.data
-            },(error)=>{
-                console.log(error);
-                console.log("error");
-            }
-        )
-    },
-    getOrdersByStaffId(id){
-        return axios.get(`${Base_url}/order/customer/${id}`).then(
-            (response)=>{
-                // console.log(response);
-                // console.log("success");
-                return response.data
+                console.log(response);
+                console.log("success");
+                return response.data[0]
             },(error)=>{
                 console.log(error);
                 console.log("error");
@@ -53,8 +41,8 @@ export const OrderApiClient = {
     acceptOrder(id){
         return axios.put(`${Base_url}/order/${id}`).then(
             (response)=>{
-                // console.log(response);
-                // console.log("success");
+                console.log(response);
+                console.log("success");
             },(error)=>{
                 console.log(error);
                 console.log("error");

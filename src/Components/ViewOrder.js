@@ -18,7 +18,6 @@ export default function ViewOrder() {
 
     const [trays, setTrays] = useState([])
 
-
     const { id } = useParams();
 
     useEffect(() => {
