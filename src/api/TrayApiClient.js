@@ -7,7 +7,7 @@ export const TrayApiClient = {
             (response)=>{
                 console.log(response);
                 console.log("success");
-                return response.data
+                return response.data                
             },(error)=>{
                 console.log(error);
                 console.log("error");

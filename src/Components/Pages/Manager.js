@@ -1,7 +1,7 @@
 import '../../App.css';
-import { OrderApiClient } from '../../api/OrderApiClient';
-import React from "react";
+import React, {useEffect, useState} from "react";
 import OrderDetails from "../OrderDetails";
+import { OrderApiClient } from '../../api/OrderApiClient';
 import { ERoles } from '../ERoles';
 
 function Manager() {
@@ -10,7 +10,7 @@ function Manager() {
 
     return (
         <>
-            <OrderDetails orderId={orderId} role={ERoles.manager}/>
+            <OrderDetails orderId={orderId} role={ERoles.Manager}/>
         </>
     );
 }

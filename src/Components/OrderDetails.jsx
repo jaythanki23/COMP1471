@@ -15,7 +15,7 @@ export default function OrderDetails({orderId,role}) {
     useEffect(() => {
         OrderApiClient.getOrder(orderId).then(
             o=>setOrder(o));
-    }, [orderId]);
+      }, [orderId]);
 
     useEffect(() => {
         if(order == null)
@@ -23,7 +23,7 @@ export default function OrderDetails({orderId,role}) {
 
         TrayApiClient.getAllTraysByOrderId(order.id).then(
             o=>setTrays((o==undefined)?[]:o));
-    }, [order]);
+      }, [order]);
 
     if(order == null)
         return null
@@ -31,7 +31,7 @@ export default function OrderDetails({orderId,role}) {
     function handleOrderAccept() {
         OrderApiClient.acceptOrder(order.id).then(
             ()=>OrderApiClient.getOrder(orderId).then(
-                o=>setOrder(o)));
+                        o=>setOrder(o)));
     }
 
     return (
@@ -49,9 +49,9 @@ export default function OrderDetails({orderId,role}) {
             Created: {order.creationDate}
             <br/>
             {trays.map((tray,index) => (
-                <TrayDetails key={index} tray={tray}></TrayDetails>
-            ))}
+            <TrayDetails key={index} tray={tray} role={role}></TrayDetails>
+           ))}
         </div>
-
+        
     )
 }
