@@ -5,8 +5,8 @@
   "homepage": "",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/order-event": "^13.5.0",
+    "@testing-library/react": "^13.4.0",
     "axios": "^1.3.4",
     "localforage": "^1.10.0",
     "luxon": "^3.3.0",
