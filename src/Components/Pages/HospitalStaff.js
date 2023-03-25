@@ -1,5 +1,6 @@
 import '../../App.css';
 import OrderForm from "../OrderForm";
+import CreateOrder from "../CreateOrder";
 import React from "react";
 import '../OrderForm.css'
 import {Link} from "react-router-dom";
@@ -23,7 +24,9 @@ function HospitalStaff() {
                 to={'/tracking'}>
                     Track your order
             </StyledLink>
-            <OrderForm />
+            <br/>
+            <CreateOrder></CreateOrder>
+            {/* <OrderForm /> */}
         </>
     );
 }

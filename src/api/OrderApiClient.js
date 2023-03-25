@@ -60,5 +60,17 @@ export const OrderApiClient = {
                 console.log("error");
             }
         )
+    },
+    createOrder(order){
+        return axios.post(`${Base_url}/order`, order).then(
+            (response)=>{
+                console.log(response);
+                console.log("success");
+                return response.data
+            },(error)=>{
+                console.log(error);
+                console.log("error");
+            }
+        )
     }
 }
