@@ -25,6 +25,10 @@ public class OrderService implements OrderServiceInterface {
         return orderRepository.findAll();
     }
 
+    @Override
+    public List<Order> getAllByStaff(Integer id) {
+        return orderRepository.findByStaffId(id);
+    }
 
     @Override
     public Order getOrder(Integer id) {

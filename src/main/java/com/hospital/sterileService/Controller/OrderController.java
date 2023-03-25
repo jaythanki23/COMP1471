@@ -34,6 +34,11 @@ public class OrderController {
         return new ResponseEntity<Order>(orderService.getOrder(id), HttpStatus.OK);
     }
 
+    @GetMapping("/staff/{id}")
+    public ResponseEntity<List<Order>> getAllByStaff(@PathVariable("id") Integer id){
+        return new ResponseEntity<List<Order>>(orderService.getAllByStaff(id), HttpStatus.OK);
+    }
+
     @PostMapping()
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         return new ResponseEntity<Order>(orderService.createOrder(order), HttpStatus.CREATED);
