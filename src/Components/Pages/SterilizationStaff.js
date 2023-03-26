@@ -35,12 +35,12 @@ function SterilizationStaff() {
                 value = {staffId}
                 onChange={(e) => setStaffId(e.target.value)}
             />
+            <Button onClick={()=>loadOrders()}>Load</Button>
 
             {orders.map((o,index) => (
                 <OrderDetails key={index} orderId={o.id} role={ERoles.sterilizationStaff}/>
             ))}
 
-            <Button onClick={()=>loadOrders()}>Load</Button>
 
         </div>
     );

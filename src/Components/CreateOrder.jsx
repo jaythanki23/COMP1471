@@ -4,6 +4,7 @@ import { OrderApiClient } from "../api/OrderApiClient";
 import {TrayApiClient} from '../api/TrayApiClient'
 import NewTray from './NewTray';
 import { DateTime } from 'luxon';
+import { OperationApiClient } from "../api/OperationApiClient";
 
 export default function CreateOrder() {
 
@@ -21,7 +22,6 @@ export default function CreateOrder() {
     function addTray(){
         var traysTmp = trays.slice();
         traysTmp.push({
-            id: undefined,
             order: {},
             trayConfiguration: trayConfigs.length>0?trayConfigs[0]:undefined,
             operation: {
@@ -43,8 +43,14 @@ export default function CreateOrder() {
             }).then((order)=>{
                 for(var tray of trays){
                     tray.order = order
-                    TrayApiClient.createTray(tray)
-                    .then((data)=>{console.log("+TRAY:",data)})
+                    OperationApiClient.createOperation(tray.operation)
+                    .then(() => {
+                        TrayApiClient.createTray(tray)
+                        .then((data)=>{
+                            console.log("+TRAY:",data)
+                            setTrays([])
+                        })
+                    })
                 }
             })
     }

@@ -26,13 +26,6 @@ export default function NewTray({tray, trayConfigs}) {
     return (
         <div>
             <h2>New Tray</h2>
-            Tray ID: <input
-                    type='number'
-                    name='trayId'
-                    placeholder='Enter the tray ID'
-                    value = {tray.id}
-                    onChange={(e) => {tray.id  = e.target.value}}
-                /> <br/>
             Tray type: <select value={configIndex} onChange={(e) => {setConfig(e.target.value)}}>
                 {trayConfigs.map((tc,index) => (
                     <option key={index} value={index}>{tc.trayName}</option>
