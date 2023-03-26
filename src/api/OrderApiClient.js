@@ -39,7 +39,7 @@ export const OrderApiClient = {
         )
     },
     getOrdersByStaffId(id){
-        return axios.get(`${Base_url}/order/customer/${id}`).then(
+        return axios.get(`${Base_url}/order/staff/${id}`).then(
             (response)=>{
                 // console.log(response);
                 // console.log("success");

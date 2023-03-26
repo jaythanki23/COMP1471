@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import OrderDetails from "../OrderDetails";
 import { OrderApiClient } from '../../api/OrderApiClient';
 import { ERoles } from '../ERoles';
+import { Button } from "react-bootstrap";
 
 function SterilizationStaff() {
 
@@ -14,30 +15,33 @@ function SterilizationStaff() {
         if(staffId === undefined)
             return;
 
-        OrderApiClient.getOrderByStaffId(staffId).then(
-            o=>setOrders(o));
+        OrderApiClient.getOrdersByStaffId(staffId).then(
+            (o)=>{
+                if(o===undefined){
+                    return;
+                }
+                setOrders(o)
+            }
+        );
     }
 
     return (
         <div>
-            <form onSubmit={() => loadOrders()}>
-                <input
-                    type='number'
-                    className='FormInput'
-                    name='staffId'
-                    placeholder='Enter your staff ID'
-                    required
-                    value = {staffId}
-                    onChange={(e) => setStaffId(e.target.value)}
-                />
-                <button type='submit' className='SubmitButton'>
-                    Load
-                </button>
-            </form>
+            Enter your staff ID:
+            <input
+                type='number'
+                name='staffId'
+                placeholder='Staff ID'
+                value = {staffId}
+                onChange={(e) => setStaffId(e.target.value)}
+            />
 
             {orders.map((o,index) => (
                 <OrderDetails key={index} orderId={o.id} role={ERoles.sterilizationStaff}/>
             ))}
+
+            <Button onClick={()=>loadOrders()}>Load</Button>
+
         </div>
     );
 }
