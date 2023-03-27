@@ -1,49 +1,45 @@
 import '../../App.css';
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {InstrumentApiClient} from "../../api/InstrumentApiClient";
+import {Button} from "react-bootstrap";
+import {TrayApiClient} from "../../api/TrayApiClient";
+import NewTray from "../NewTray";
 import {OrderApiClient} from "../../api/OrderApiClient";
 import {OperationApiClient} from "../../api/OperationApiClient";
-import {TrayApiClient} from "../../api/TrayApiClient";
-import {InstrumentApiClient} from "../../api/InstrumentApiClient";
-import {SterilizationStepApiClient} from "../../api/SterilizationStepApiClient";
-
+import {
+    SterilizationStepApiClient as SterilizationStepApiClientApiClient,
+    SterilizationStepApiClient
+} from "../../api/SterilizationStepApiClient";
 
 export default function ManageInstrumentTypes() {
 
     const [instruments, setInstruments] = useState([])
-    const [steps, setSteps] = useState()
+    const [instrumentTypes, setInstrumentTypes] = useState([])
+    const [sterilizationSteps, setSterilizationSteps] = useState([])
+    const [typeIndex, setTypeIndex] = useState();
     const [instrumentName, setInstrumentName] = useState()
-    const [instrumentType, setInstrumentType] = useState([])
-    const [sterilizationInstrumentTypes, setSterilizationInstrumentTypes] = useState([])
 
     useEffect(() => {
         loadInstruments();
     }, [])
     useEffect(() => {
-        InstrumentApiClient.getAllInstrumentTypes().then(
-            c => setInstrumentType(c)
-        );
-    }, []);
-    function addInstrument(){
-        var instrumentsTmp = instruments.slice();
-        instrumentsTmp.push({
-            step: {
-                id: undefined,
-                stepName: undefined
-            }
-        });
-        setInstrumentType(instrumentsTmp);
-    }
+        loadSterilizationSteps();
+    },[])
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await axios.post("http://localhost:8080/api/instrument_type", instrumentType);
+        await axios.post("http://localhost:8080/api/instrument_type", instrumentTypes);
     };
 
     const loadInstruments= async () => {
         const result = await axios.get(`http://localhost:8080/api/instrument_type`);
         setInstruments(result.data);
+    };
+    const loadSterilizationSteps= async () => {
+        const result = await axios.get(`http://localhost:8080/api/step/all`);
+        setSterilizationSteps(result.data);
     };
 
     const deleteInstrument = async (id) => {
@@ -51,17 +47,23 @@ export default function ManageInstrumentTypes() {
         loadInstruments();
     };
 
+    function setConfig(index){
+        console.log("setConfig ",index);
+        instruments.stepName = instruments[index];
+        console.log("tray.trayConfiguration ",instruments.stepName);
+        setTypeIndex(index)
+    }
     function submitInstrumentType(){
         InstrumentApiClient.createInstrumentType({
-            instrumentType: instrumentType
-        }).then((instrument)=>{
-            for(var step of steps){
-                step.instrument = instrument
-                SterilizationStepApiClient.createSterilizationStep(step.instrument)
+            instrumentTypes: instrumentTypes
+        }).then((step)=>{
+            for(var instrument of instruments){
+                instrument.step = step
+                            SterilizationStepApiClientApiClient.createSterilizationStep(instrument)
                             .then((data)=>{
-                                console.log("+STEP:",data)
-                                setInstrumentType([])
-                    })
+                                console.log("+TRAY:",data)
+                                setInstrumentTypes([])
+                            })
             }
         })
     }
@@ -71,11 +73,17 @@ export default function ManageInstrumentTypes() {
                 <input
                     type='text'
                     className='FormInput'
-                    name='trayName'
+                    name='instrumentName'
                     placeholder='New instrument type'
                     required
-                    onChange={(e) => setInstrumentName(e.target.value)}
+                    value = {instrumentName}
+                    onChange={(e) => setInstrumentTypes(e.target.value)}
                 />
+                <select value={typeIndex} onChange={(e) => {setConfig(e.target.value)}}>
+                    {sterilizationSteps.map((ss,index) => (
+                        <option key={index} value={index}>{ss.stepName}</option>
+                    ))}
+                </select>
                 <button type='submit' className='SubmitButton' onClick={(e) => {
                     window.location.reload()
                     submitInstrumentType()
@@ -90,7 +98,6 @@ export default function ManageInstrumentTypes() {
                             <th scope="col">Instrument ID</th>
                             <th scope="col">Name</th>
                             <th scope="col">Sterilization Step</th>
-                            <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -98,14 +105,12 @@ export default function ManageInstrumentTypes() {
                             <tr>
                                 <td>{instrument.id}</td>
                                 <td>{instrument.instrumentName}</td>
-                                {instrument.step.stepName == null ?
-                                "No step"
-                                : instrument.step.stepName}
+                                <td>{instrument.step.stepName}</td>
                                 <button
                                     className="btn btn-primary mx-2"
                                     onClick={() => deleteInstrument(instrument.id)}
                                 >
-                                    Delete Instrument
+                                    Delete
                                 </button>
                             </tr>
                         ))}
