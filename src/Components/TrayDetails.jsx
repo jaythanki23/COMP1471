@@ -39,6 +39,7 @@ export default function TrayDetails({tray,role}) {
             Tray type: {tray.trayConfiguration.trayName}
             <br/>
             <strong>Used in operation:</strong><br/>
+            
             Operation ID: {tray.operation.id}<br/>
             Date: {tray.operation.creationDate}<br/>
             Operation staff ID: {tray.operation.staffId}<br/>
