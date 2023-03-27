@@ -8,10 +8,7 @@ import {TrayApiClient} from "../../api/TrayApiClient";
 import NewTray from "../NewTray";
 import {OrderApiClient} from "../../api/OrderApiClient";
 import {OperationApiClient} from "../../api/OperationApiClient";
-import {
-    SterilizationStepApiClient as SterilizationStepApiClientApiClient,
-    SterilizationStepApiClient
-} from "../../api/SterilizationStepApiClient";
+import {SterilizationStepApiClient} from "../../api/SterilizationStepApiClient";
 
 export default function ManageInstrumentTypes() {
 
@@ -59,7 +56,7 @@ export default function ManageInstrumentTypes() {
         }).then((step)=>{
             for(var instrument of instruments){
                 instrument.step = step
-                            SterilizationStepApiClientApiClient.createSterilizationStep(instrument)
+                            SterilizationStepApiClient.createSterilizationStep(instrument)
                             .then((data)=>{
                                 console.log("+TRAY:",data)
                                 setInstrumentTypes([])
