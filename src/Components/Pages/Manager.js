@@ -18,7 +18,7 @@ function Manager() {
                     e.preventDefault();
                     window.location.href='http://localhost:3000/manager/manage';
                 }}
-            > Manage tray configurations and sterilization processes</button>
+            > Manage tray configurations, instruments and sterilization processes</button>
         </>
     );
 }
