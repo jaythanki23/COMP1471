@@ -12,11 +12,11 @@ import {SterilizationStepApiClient} from "../../api/SterilizationStepApiClient";
 
 export default function ManageInstrumentTypes() {
 
-    const [instruments, setInstruments] = useState([])
-    const [instrumentTypes, setInstrumentTypes] = useState([])
-    const [sterilizationSteps, setSterilizationSteps] = useState([])
-    const [typeIndex, setTypeIndex] = useState();
-    const [instrumentName, setInstrumentName] = useState()
+    const [sterilizationSteps, setSterilizationSteps] = useState([]) // available steps
+    const [instruments, setInstruments] = useState([]) //available instruments
+
+    const [instrumentName, setInstrumentName] = useState() //name of new instrument
+    const [stepIndex, setStepIndex] = useState(0);
 
     useEffect(() => {
         loadInstruments();
@@ -24,11 +24,6 @@ export default function ManageInstrumentTypes() {
     useEffect(() => {
         loadSterilizationSteps();
     },[])
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        await axios.post("http://localhost:8080/api/instrument_type", instrumentTypes);
-    };
 
     const loadInstruments= async () => {
         const result = await axios.get(`http://localhost:8080/api/instrument_type`);
@@ -44,49 +39,38 @@ export default function ManageInstrumentTypes() {
         loadInstruments();
     };
 
-    function setConfig(index){
-        console.log("setConfig ",index);
-        instruments.stepName = instruments[index];
-        console.log("tray.trayConfiguration ",instruments.stepName);
-        setTypeIndex(index)
-    }
     function submitInstrumentType(){
         InstrumentApiClient.createInstrumentType({
-            instrumentTypes: instrumentTypes
-        }).then((step)=>{
-            for(var instrument of instruments){
-                instrument.step = step
-                            SterilizationStepApiClient.createSterilizationStep(instrument)
-                            .then((data)=>{
-                                console.log("+TRAY:",data)
-                                setInstrumentTypes([])
-                            })
-            }
+            instrumentName: instrumentName,
+            step: sterilizationSteps[stepIndex]
+        }).then((response)=>{
+            console.log("Inst response:", response)
+            setInstrumentName("")
+            loadInstruments()
         })
     }
 
     return (
         <>
-                <input
-                    type='text'
-                    className='FormInput'
-                    name='instrumentName'
-                    placeholder='New instrument type'
-                    required
-                    value = {instrumentName}
-                    onChange={(e) => setInstrumentTypes(e.target.value)}
-                />
-                <select value={typeIndex} onChange={(e) => {setConfig(e.target.value)}}>
-                    {sterilizationSteps.map((ss,index) => (
-                        <option key={index} value={index}>{ss.stepName}</option>
-                    ))}
-                </select>
-                <button type='submit' className='SubmitButton' onClick={(e) => {
-                    window.location.reload()
-                    submitInstrumentType()
-                }}>
-                    Submit
-                </button>
+            <input
+                type='text'
+                className='FormInput'
+                name='instrumentName'
+                placeholder='New instrument type'
+                required
+                value = {instrumentName}
+                onChange={(e) => setInstrumentName(e.target.value)}
+            />
+            <select value={stepIndex} onChange={(e) => {setStepIndex(e.target.value)}}>
+                {sterilizationSteps.map((ss,index) => (
+                    <option key={index} value={index}>{ss.stepName}</option>
+                ))}
+            </select>
+            <button type='submit' className='SubmitButton' onClick={(e) => {
+                submitInstrumentType()
+            }}>
+                Submit
+            </button>
             <div className="container">
                 <div className="py-4">
                     <table className="table border shadow">
