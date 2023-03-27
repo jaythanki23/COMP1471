@@ -1,12 +1,12 @@
 import '../../App.css';
-import React, {orderef} from "react";
+import React, {useRef} from "react";
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import './Tracking.css'
 
 function Tracking() {
 
-    const data=orderef();
+    const data=useRef();
 
     const handleClick=()=>{
         console.log(data.current.value,"initial value")
