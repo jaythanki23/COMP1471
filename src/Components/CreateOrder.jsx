@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { OrderApiClient } from "../api/OrderApiClient";
 import {TrayApiClient} from '../api/TrayApiClient'
 import NewTray from './NewTray';
+import './CreateOrder.css'
 import { DateTime } from 'luxon';
 import { OperationApiClient } from "../api/OperationApiClient";
 
@@ -31,7 +32,6 @@ export default function CreateOrder() {
                 successStatus: false,
                 creationDate: undefined
             }
-
         });
         setTrays(traysTmp);
     }
@@ -40,32 +40,33 @@ export default function CreateOrder() {
         OrderApiClient.createOrder({
             customerId: customerId//,
             //  creationDate: DateTime.fromISO(new Date().toISOString()).toISO()
-            }).then((order)=>{
-                for(var tray of trays){
-                    tray.order = order
-                    OperationApiClient.createOperation(tray.operation)
+        }).then((order)=>{
+            for(var tray of trays){
+                tray.order = order
+                OperationApiClient.createOperation(tray.operation)
                     .then(() => {
                         TrayApiClient.createTray(tray)
-                        .then((data)=>{
-                            console.log("+TRAY:",data)
-                            setTrays([])
-                        })
+                            .then((data)=>{
+                                console.log("+TRAY:",data)
+                                setTrays([])
+                            })
                     })
-                }
-            })
+            }
+        })
     }
-    
+
     return (
-        <div>
+        <div className="container">
             <h1>Create a new order</h1>
             Customer ID: <input
-                    type='number'
-                    name='customer'
-                    placeholder='Enter your customer ID'
-                    required
-                    value = {customerId}
-                    onChange={(e) => setCustomerId(parseInt(e.target.value))}
-                /> <br/>
+            type='number'
+            name='customer'
+            placeholder='Enter your customer ID'
+            required
+            className="FormInput"
+            value = {customerId}
+            onChange={(e) => setCustomerId(parseInt(e.target.value))}
+        /> <br/>
             {/* Date: <DatePicker onChange={setDate} value={date} /> */}
             <br/>
 
@@ -74,11 +75,11 @@ export default function CreateOrder() {
             ))}
 
             <br/>
-            <Button onClick={()=>addTray()}>Add tray</Button>
+            <Button className="SubmitButton" onClick={()=>addTray()}>Add tray</Button>
             <br/>
-            <Button onClick={()=>submitOrder()}>Submit order</Button>
+            <Button className="SubmitButton" onClick={()=>submitOrder()}>Submit order</Button>
 
         </div>
-        
+
     )
 }
