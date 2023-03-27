@@ -33,11 +33,11 @@ export default function SterilizationProcessDetails({process, role}) {
             <h4>Sterilisation: {proc.instrumentType.step.stepName}</h4>
             Machine ID: {(proc.sterilisation_machine_id===null)?"---":proc.sterilisation_machine_id}<br/>
             Status: {proc.done?"Done":"In progress"}
-            {(role===ERoles.SterilizationStaff&&!proc.done)&&(<Button onClick={()=>{setStatus()}}>Set Done</Button>)}
+            {(role===ERoles.sterilizationStaff&&!proc.done)&&(<Button onClick={()=>{setStatus()}}>Set Done</Button>)}
             <br/>
             Date: {proc.date}
-            {role===ERoles.SterilizationStaff&&<DatePicker onChange={onChangeDate} value={date} />}
-            {role===ERoles.SterilizationStaff&&(<Button onClick={()=>setDate()}>Set Date</Button>)}
+            {role===ERoles.sterilizationStaff&&<DatePicker onChange={onChangeDate} value={date} />}
+            {role===ERoles.sterilizationStaff&&(<Button onClick={()=>setDate()}>Set Date</Button>)}
             <br/>
         </div>
     )
