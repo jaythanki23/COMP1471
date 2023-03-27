@@ -51,11 +51,10 @@ export default function OrderDetails(role) {
                                     className="btn btn-primary mx-2"
                                     to={`/manager/edit-order/${order.id}`}
                                 >
-                                    Edit
+                                    View
                                 </Link>
                                 {order.accepted === false ?
                                     <button
-                                        className="btn btn-primary mx-2"
                                         onClick={() => deleteOrder(order.id)}
                                     >
                                         Cancel
