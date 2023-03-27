@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/instrument_type")
@@ -19,6 +21,11 @@ public class InstrumentTypeController {
     @GetMapping("{id}")
     public ResponseEntity<InstrumentType> getInstrumentType(@PathVariable("id") Integer id) {
         return new ResponseEntity<InstrumentType>(instrumentTypeService.getInstrumentType(id), HttpStatus.OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<InstrumentType>> getAllInstrumentType(){
+        return new ResponseEntity<List<InstrumentType>>(instrumentTypeService.getAllInstrumentType(), HttpStatus.OK);
     }
 
     @PostMapping()

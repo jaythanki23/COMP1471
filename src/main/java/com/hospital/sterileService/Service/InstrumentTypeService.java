@@ -4,6 +4,8 @@ import com.hospital.sterileService.Model.InstrumentType;
 import com.hospital.sterileService.Repository.InstrumentTypeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InstrumentTypeService implements InstrumentTypeServiceInterface {
     private InstrumentTypeRepository instrumentTypeRepository;
@@ -15,6 +17,11 @@ public class InstrumentTypeService implements InstrumentTypeServiceInterface {
     @Override
     public InstrumentType getInstrumentType(Integer id) {
         return instrumentTypeRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<InstrumentType> getAllInstrumentType() {
+        return instrumentTypeRepository.findAll();
     }
 
     @Override
