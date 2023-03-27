@@ -3,18 +3,24 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import TrayType from "../TrayType";
 import {Link, useParams} from "react-router-dom";
+import NewTray from "../NewTray";
+import {OrderApiClient} from "../../api/OrderApiClient";
+import {OperationApiClient} from "../../api/OperationApiClient";
+import {TrayApiClient} from "../../api/TrayApiClient";
+import {SterilizationStepApiClient} from "../../api/SterilizationStepApiClient";
+import {Button} from "react-bootstrap";
 
-export default function ManageTrays() {
+export default function ManageTrayConfigs() {
 
-    const [tray_configuration_table, setTrayConfig] = useState({});
-
-    const {id} = useParams();
-
-    const [trays, setTrays] = useState([]);
+    const [steps, setSteps] = useState([])
+    const [tray_configuration_table, setTrayConfig] = useState({})
+    const [trays, setTrays] = useState([])
+    const [instruments, setInstruments] = useState([])
+    const {id} = useParams()
 
     useEffect(() => {
         loadTrays();
-    }, []);
+    }, [])
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -31,6 +37,18 @@ export default function ManageTrays() {
         loadTrays();
     };
 
+    function addInstrument(){
+        var instrumentsTmp = instruments.slice();
+        instrumentsTmp.push({
+            instrumentName: "" ,
+            step: {
+                id: undefined,
+                stepName: undefined
+            }
+        });
+        setInstruments(instrumentsTmp);
+    }
+
     return (
         <>
             <form onSubmit={(e) => onSubmit(e)}>
@@ -44,11 +62,14 @@ export default function ManageTrays() {
                         setTrayConfig({...tray_configuration_table, trayName: e.target.value})
                     }}
                 />
+
                 <button type='submit' className='SubmitButton' onClick={(e) => {
                     window.location.reload()
                 }}>
                     Submit
                 </button>
+
+                <Button className="SubmitButton" onClick={()=>addInstrument()}>Add instrument</Button>
             </form>
             <div className="container">
                 <div className="py-4">
@@ -67,7 +88,7 @@ export default function ManageTrays() {
                                 <td>{tray.trayName}</td>
                                 <Link
                                     className="btn btn-primary mx-2"
-                                    to={`/manager/manage/trays/${tray.id}`}
+                                    to={`/manager/manage/configs/${tray.id}`}
                                 >
                                     Edit
                                 </Link>
@@ -83,6 +104,9 @@ export default function ManageTrays() {
                     </table>
                 </div>
             </div>
+            <Link className="btn btn-primary my-2" to={"/manager/manage"}>
+                Back to Manage All
+            </Link>
         </>
     );
 }
