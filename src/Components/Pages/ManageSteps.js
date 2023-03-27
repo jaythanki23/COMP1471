@@ -13,12 +13,14 @@ export default function ManageSteps() {
         loadSteps();
     }, [])
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        await axios.post("http://localhost:8080/api/step", sterilizationStep);
+    function onSubmit() {
+        axios.post("http://localhost:8080/api/step", sterilizationStep).then(
+            loadSteps()
+        );
     }
 
     const loadSteps = async () => {
+        console.log("loadSteps")
         const result = await axios.get(`http://localhost:8080/api/step/all`);
         setSteps(result.data);
     }
@@ -26,7 +28,7 @@ export default function ManageSteps() {
     return (
         <>
             <>
-                <form onSubmit={(e) => onSubmit(e)}>
+                {/* <form onSubmit={(e) => onSubmit(e)}> */}
                     <input
                         type='text'
                         className='FormInput'
@@ -37,12 +39,14 @@ export default function ManageSteps() {
                             setSterilizationSteps({...sterilizationStep, stepName: e.target.value})
                         }}
                     />
-                    <button type='submit' className='SubmitButton' onClick={(e) => {
-                        window.location.reload()
+                    <Button className="SubmitButton" onClick={()=>onSubmit()}>Submit</Button>
+
+                    {/* <button type='submit' className='SubmitButton' onClick={(e) => {
+                        // window.location.reload()
                     }}>
                         Submit
-                    </button>
-                </form>
+                    </button> */}
+                {/* </form> */}
                 <div className="container">
                     <div className="py-4">
                         <table className="table border shadow">
@@ -54,7 +58,7 @@ export default function ManageSteps() {
                             </thead>
                             <tbody>
                             {steps.map((step, index) => (
-                                <tr>
+                                <tr key={index}>
                                     <td>{step.id}</td>
                                     <td>{step.stepName}</td>
                                 </tr>
