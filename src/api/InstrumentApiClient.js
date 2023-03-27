@@ -14,8 +14,30 @@ export const InstrumentApiClient = {
             }
         )
     },
+    getAllInstrumentTypes(){
+        return axios.get(`${Base_url}/instrument_type`).then(
+            (response)=>{
+                return response.data
+            },(error)=>{
+                console.log(error);
+                console.log("error");
+            }
+        )
+    },
     getInstrumentTypebyId(id){
         return axios.get(`${Base_url}/instrument_type/${id}`).then(
+            (response)=>{
+                console.log(response);
+                console.log("success");
+                return response.data
+            },(error)=>{
+                console.log(error);
+                console.log("error");
+            }
+        )
+    },
+    createInstrumentType(instrumentType){
+        return axios.post(`${Base_url}/instrument_type`, instrumentType).then(
             (response)=>{
                 console.log(response);
                 console.log("success");
