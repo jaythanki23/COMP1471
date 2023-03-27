@@ -29,6 +29,18 @@ export const SterilizationProcessApiClient = {
             }
         )
     },
+    createSterilizationProcess(instrumentType){
+        return axios.post(`${Base_url}/instrument_type`, instrumentType).then(
+            (response)=>{
+                console.log(response);
+                console.log("success");
+                return response.data
+            },(error)=>{
+                console.log(error);
+                console.log("error");
+            }
+        )
+    },
     setProcessStatusToDone(id){
         return axios.put(`${Base_url}/sterilisation_process/status/${id}`).then(
             (response)=>{
