@@ -11,8 +11,12 @@ export default function EditOrder({orderId, role}) {
     let navigate = useNavigate();
 
     const [order, setOrder] = useState({
+        staff: {
+            id: "",
+            staffName: ""
+        }
     });
-
+    const [staff, setStaff] = useState([])
     const [trays, setTrays] = useState([])
 
     const { id } = useParams();
@@ -20,6 +24,9 @@ export default function EditOrder({orderId, role}) {
     useEffect(() => {
         loadOrder();
     }, []);
+    useEffect(() => {
+        loadStaff();
+    },[]);
 
     useEffect(() => {
         if(order == null)
@@ -34,10 +41,20 @@ export default function EditOrder({orderId, role}) {
         const result = await axios.get(`http://localhost:8080/api/order/${id}`);
         setOrder(result.data);
     };
+    const loadStaff = async() => {
+        const result = await axios.get(`http://localhost:8080/api/order/staff/${id}`)
+        setStaff(result.data);
+    };
+
 
     const deleteOrder = async (id) => {
         await axios.delete(`http://localhost:8080/api/order/${id}`);
         navigate("/");
+    };
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        await axios.put(`http://localhost:8080/api/order/assign_staff/${id}`, staff);
     };
 
     function handleOrderAccept() {
@@ -72,6 +89,24 @@ export default function EditOrder({orderId, role}) {
                                         <Button onClick={()=>handleOrderAccept()}>Accept</Button>
                                         : null}
                                 </li>
+                                <li>
+                                <b>Assign a staff member: </b>
+                                </li>
+                                <form onSubmit={(e) => onSubmit(e)}>
+                                    <input
+                                        type='id'
+                                        className='FormInput'
+                                        name='staffId'
+                                        placeholder='Assign'
+                                        required
+                                        onChange={(e) => {
+                                            setStaff({...staff, id: e.target.value})
+                                        }}
+                                    />
+                                    <button type='submit' className='SubmitButton'>
+                                        Submit
+                                    </button>
+                            </form>
                                 <li className="list-group-item">
                                     <b>Trays ordered: </b>
                                     {trays.map((tray,index) => (
