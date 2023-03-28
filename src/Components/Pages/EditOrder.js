@@ -55,6 +55,7 @@ export default function EditOrder({orderId, role}) {
     const onSubmit = async (e) => {
         e.preventDefault();
         await axios.put(`http://localhost:8080/api/order/assign_staff/${id}`, staff);
+        window.location.reload()
     };
 
     function handleOrderAccept() {
@@ -89,13 +90,12 @@ export default function EditOrder({orderId, role}) {
                                         <Button onClick={()=>handleOrderAccept()}>Accept</Button>
                                         : null}
                                 </li>
-                                <li>
+                                <li className="list-group-item">
                                 <b>Assign a staff member: </b>
                                 </li>
                                 <form onSubmit={(e) => onSubmit(e)}>
                                     <input
                                         type='id'
-                                        className='FormInput'
                                         name='staffId'
                                         placeholder='Assign'
                                         required
@@ -103,7 +103,7 @@ export default function EditOrder({orderId, role}) {
                                             setStaff({...staff, id: e.target.value})
                                         }}
                                     />
-                                    <button type='submit' className='SubmitButton'>
+                                    <button type='submit' >
                                         Submit
                                     </button>
                             </form>
