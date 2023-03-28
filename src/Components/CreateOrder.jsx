@@ -48,10 +48,10 @@ export default function CreateOrder() {
                         TrayApiClient.createTray(tray)
                             .then((data)=>{
                                 console.log("+TRAY:",data)
-                                setTrays([])
                             })
                     })
             }
+            setTrays([])
         })
     }
 

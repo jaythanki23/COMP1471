@@ -22,18 +22,6 @@ export const TrayApiClient = {
             }
         )
     },
-    createTrayConfig(trayConfiguration){
-        return axios.post(`${Base_url}/configuration`, trayConfiguration).then(
-            (response)=>{
-                console.log(response);
-                console.log("success");
-                return response.data
-            },(error)=>{
-                console.log(error);
-                console.log("error");
-            }
-        )
-    },
     createTray(tray){
         return axios.post(`${Base_url}/order/tray`, tray).then(
             (response)=>{

@@ -3,13 +3,18 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {TrayApiClient} from "../../api/TrayApiClient";
+import {TrayConfigurationApiClient} from "../../api/TrayConfigurationApiClient";
+import NewInstrumentCount from '../NewInstrumentCount'
+import { Button } from "react-bootstrap";
+
 
 export default function ManageTrayConfigs() {
     const [instruments, setInstruments] = useState([]) //available instruments
     const [trayConfigurations, setTrayConfigurations] = useState([]) // available tray configurations
 
     const [trayName, setTrayName] = useState() //name of new tray configuration
-    const [instrumentIndex, setInstrumentIndex] = useState(0);
+    const [instrumentCounts, setInstrumentCounts] = useState([])
+    
 
     useEffect(() => {
         loadTrayConfigurations();
@@ -33,32 +38,57 @@ export default function ManageTrayConfigs() {
     };
 
     function submitConfigurationType(){
-        TrayApiClient.createTrayConfig({
+        TrayConfigurationApiClient.createTrayConfig({
             trayName: trayName,
-            instrument: instruments[instrumentIndex]
-        }).then((response)=>{
-            console.log("Tray response:", response)
+        }).then((trayCof)=>{
+            console.log("+TrayConfig:", trayCof)
+            //create inst counts
+            for(var ic of instrumentCounts){
+                ic.trayConfiguration = trayCof
+                TrayConfigurationApiClient.createInstrumentCount(ic).then((newIC)=>{
+                    console.log("+IC:",newIC)
+                })
+            }
             setTrayName("")
+            setInstrumentCounts([])
             loadTrayConfigurations()
         })
     }
+
+    function addInstrumentCount(){
+        var icTmp = instrumentCounts.slice();
+        icTmp.push({
+            trayConfiguration: undefined,
+            instrumentType: undefined,
+            instrumentCount: 0
+        });
+        setInstrumentCounts(icTmp);
+    }
+    function removeInstrumentCount(){
+        var icTmp = instrumentCounts.slice();
+        icTmp.pop();
+        setInstrumentCounts(icTmp);
+    }
+    
 
     return (
         <>
             <input
                 type='text'
                 className='FormInput'
-                name='instrumentName'
-                placeholder='New instrument type'
+                name='configName'
+                placeholder='Name of new tray configuration'
                 required
                 value = {trayName}
                 onChange={(e) => setTrayName(e.target.value)}
             />
-            <select value={instrumentIndex} onChange={(e) => {setInstrumentIndex(e.target.value)}}>
-                {instruments.map((instrument,index) => (
-                    <option key={index} value={index}>{instrument.instrumentName}</option>
-                ))}
-            </select>
+            {instrumentCounts.map((ic,index) => (
+                <NewInstrumentCount key={index} instrumentCount={ic} instrumentTyps={instruments}/>
+            ))}
+             <br/>
+             <Button className="SubmitButton" onClick={()=>addInstrumentCount()}>Add Instrument</Button>
+             <Button className="SubmitButton" onClick={()=>removeInstrumentCount()}>Remove Instrument</Button>
+            <br/>
             <button type='submit' className='SubmitButton' onClick={(e) => {
                 submitConfigurationType()
             }}>
@@ -75,7 +105,7 @@ export default function ManageTrayConfigs() {
                         </thead>
                         <tbody>
                         {trayConfigurations.map((trayC, index) => (
-                            <tr>
+                            <tr key={index}>
                                 <td>{trayC.id}</td>
                                 <td>{trayC.trayName}</td>
                                 <Link

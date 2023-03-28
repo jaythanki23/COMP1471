@@ -49,7 +49,7 @@ export default function ViewTrayConfig() {
         <div className="container">
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                    <h2 className="header">Order Details</h2>
+                    <h2 className="header">Tray Configuration</h2>
                     <div className="card">
                         <div className="list-group-title">
                             Details of tray configuration : {trayConfig.id}
