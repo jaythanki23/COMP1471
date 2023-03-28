@@ -1,21 +1,14 @@
 import '../../App.css';
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import './Tracking.css'
 
 function Tracking() {
 
+    const [orderId, setOrderId] = useState(undefined)
+
     const data=useRef();
-
-    const handleClick=()=>{
-        console.log(data.current.value,"initial value")
-        localStorage.setItem("inputValue",data.current.value)
-    }
-
-    console.log(localStorage.getItem(1),)
-
-    var retrievedObject = localStorage.getItem("inputValue");
 
     return (
         <>
@@ -27,11 +20,11 @@ function Tracking() {
                     className="input"
                     ref={data}
                     placeholder="Your order ID"
+                    onChange={(e) => setOrderId(e.target.value)}
                 />
-                <Link to={`/tracking/view-order/${JSON.parse(retrievedObject)}`}>
+                <Link to={`/tracking/view-order/${orderId}`}>
                     <Button
                         className="button"
-                        onClick={handleClick}
                         >
                         Track
                     </Button>
@@ -40,5 +33,6 @@ function Tracking() {
         </>
     );
 }
+localStorage.clear();
 
 export default Tracking;
