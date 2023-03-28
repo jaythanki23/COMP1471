@@ -1,103 +1,89 @@
 import '../../App.css';
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import TrayType from "../TrayType";
-import {Link, useParams} from "react-router-dom";
-import NewTray from "../NewTray";
-import {OrderApiClient} from "../../api/OrderApiClient";
-import {OperationApiClient} from "../../api/OperationApiClient";
+import {Link} from "react-router-dom";
 import {TrayApiClient} from "../../api/TrayApiClient";
-import {SterilizationStepApiClient} from "../../api/SterilizationStepApiClient";
-import {Button} from "react-bootstrap";
 
 export default function ManageTrayConfigs() {
+    const [instruments, setInstruments] = useState([]) //available instruments
+    const [trayConfigurations, setTrayConfigurations] = useState([]) // available tray configurations
 
-    const [steps, setSteps] = useState([])
-    const [tray_configuration_table, setTrayConfig] = useState({})
-    const [trays, setTrays] = useState([])
-    const [instruments, setInstruments] = useState([])
-    const {id} = useParams()
+    const [trayName, setTrayName] = useState() //name of new tray configuration
+    const [instrumentIndex, setInstrumentIndex] = useState(0);
 
     useEffect(() => {
-        loadTrays();
+        loadTrayConfigurations();
+    },[])
+    useEffect(() => {
+        loadInstruments();
     }, [])
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        await axios.post("http://localhost:8080/api/configuration", tray_configuration_table);
-    };
-
-    const loadTrays = async () => {
+    const loadTrayConfigurations= async () => {
         const result = await axios.get(`http://localhost:8080/api/configuration`);
-        setTrays(result.data);
+        setTrayConfigurations(result.data);
+    };
+    const loadInstruments= async () => {
+        const result = await axios.get(`http://localhost:8080/api/instrument_type`);
+        setInstruments(result.data);
     };
 
-    const deleteTray = async (id) => {
+    const deleteTrayConfiguration = async (id) => {
         await axios.delete(`http://localhost:8080/api/configuration/${id}`);
-        loadTrays();
+        loadTrayConfigurations();
     };
 
-    function addInstrument(){
-        var instrumentsTmp = instruments.slice();
-        instrumentsTmp.push({
-            instrumentName: "" ,
-            step: {
-                id: undefined,
-                stepName: undefined
-            }
-        });
-        setInstruments(instrumentsTmp);
+    function submitConfigurationType(){
+        TrayApiClient.createTrayConfig({
+            trayName: trayName,
+            instrument: instruments[instrumentIndex]
+        }).then((response)=>{
+            console.log("Tray response:", response)
+            setTrayName("")
+            loadTrayConfigurations()
+        })
     }
 
     return (
         <>
-            <form onSubmit={(e) => onSubmit(e)}>
-                <input
-                    type='text'
-                    className='FormInput'
-                    name='trayName'
-                    placeholder='New tray configuration name'
-                    required
-                    onChange={(e) => {
-                        setTrayConfig({...tray_configuration_table, trayName: e.target.value})
-                    }}
-                />
-
-                <button type='submit' className='SubmitButton' onClick={(e) => {
-                    window.location.reload()
-                }}>
-                    Submit
-                </button>
-
-                <Button className="SubmitButton" onClick={()=>addInstrument()}>Add instrument</Button>
-            </form>
+            <input
+                type='text'
+                className='FormInput'
+                name='instrumentName'
+                placeholder='New instrument type'
+                required
+                value = {trayName}
+                onChange={(e) => setTrayName(e.target.value)}
+            />
+            <select value={instrumentIndex} onChange={(e) => {setInstrumentIndex(e.target.value)}}>
+                {instruments.map((instrument,index) => (
+                    <option key={index} value={index}>{instrument.instrumentName}</option>
+                ))}
+            </select>
+            <button type='submit' className='SubmitButton' onClick={(e) => {
+                submitConfigurationType()
+            }}>
+                Submit
+            </button>
             <div className="container">
                 <div className="py-4">
                     <table className="table border shadow">
                         <thead>
                         <tr>
-                            <th scope="col">Tray ID</th>
-                            <th scope="col">Tray Name</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Tray Configuration ID</th>
+                            <th scope="col">Name</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {trays.map((tray, index) => (
+                        {trayConfigurations.map((trayC, index) => (
                             <tr>
-                                <td>{tray.id}</td>
-                                <td>{tray.trayName}</td>
+                                <td>{trayC.id}</td>
+                                <td>{trayC.trayName}</td>
                                 <Link
                                     className="btn btn-primary mx-2"
-                                    to={`/manager/manage/configs/${tray.id}`}
+                                    to={`/manager/manage/configs/${trayC.id}`}
                                 >
-                                    Edit
+                                    View
                                 </Link>
-                                <button
-                                    className="btn btn-primary mx-2"
-                                    onClick={() => deleteTray(tray.id)}
-                                >
-                                    Delete
-                                </button>
                             </tr>
                         ))}
                         </tbody>
