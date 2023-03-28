@@ -55,7 +55,7 @@ export default function ViewTrayConfig() {
                             Details of tray configuration : {trayConfig.id}
                             <ul className="list-group">
                                 <li className="list-group-item">
-                                    <b>Tray name: </b>
+                                    <b>Tray configuration name: </b>
                                     {trayConfig.trayName}
                                 </li>
                                 <li className="list-group-item">
