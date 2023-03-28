@@ -23,6 +23,7 @@ export default function ManageSteps() {
         console.log("loadSteps")
         const result = await axios.get(`http://localhost:8080/api/step/all`);
         setSteps(result.data);
+        loadSteps()
     }
 
     return (
